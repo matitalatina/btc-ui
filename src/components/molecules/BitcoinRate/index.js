@@ -11,6 +11,7 @@ const BitcoinRate = ({ availableRates, history, stats, onChangeRate }) => {
     <li key={i}>{h.rate} - {new Date(h.stamp).toISOString()}</li>
   ))
   const changeRate = val => onChangeRate(val.value)
+  const statistics = stats && stats.avg && (<span>{stats.avg} - {stats.variance} - {stats.min} - {stats.max}</span>)
   return (
     <Wrapper>
       <Select
@@ -18,6 +19,7 @@ const BitcoinRate = ({ availableRates, history, stats, onChangeRate }) => {
         onChange={changeRate}
       />
       <HistoryChart history={history} />
+      {statistics}
       {historyRender}
     </Wrapper>
   )
