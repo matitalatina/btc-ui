@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Select from 'react-select'
 import styled from 'styled-components'
+import HistoryChart from '../../atoms/HistoryChart'
 
 const Wrapper = styled.div``
 const BitcoinRate = ({ availableRates, history, stats, onChangeRate }) => {
@@ -16,6 +17,7 @@ const BitcoinRate = ({ availableRates, history, stats, onChangeRate }) => {
         options={options}
         onChange={changeRate}
       />
+      <HistoryChart history={history} />
       {historyRender}
     </Wrapper>
   )

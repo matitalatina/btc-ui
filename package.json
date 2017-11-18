@@ -5,6 +5,7 @@
   "dependencies": {
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
+    "react-highcharts": "^15.0.0",
     "react-scripts": "1.0.17",
     "react-select": "^1.0.0-rc.10",
     "styled-components": "^2.2.3",
