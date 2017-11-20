@@ -8,7 +8,12 @@ class BitcoinRateContainer extends Component {
     super(props)
     this.changeRate = this.changeRate.bind(this)
     this.onUpdateRateStats = this.onUpdateRateStats.bind(this)
-    this.state = { availableRates: [], history: [], stats: {} }
+    this.state = {
+      availableRates: [],
+      history: [],
+      stats: {},
+      currency: {},
+    }
     this.listener = new RateUpdateListener({ onUpdate: this.onUpdateRateStats })
   }
 
@@ -27,6 +32,8 @@ class BitcoinRateContainer extends Component {
 
   changeRate(currencyCode) {
     this.listener.listen(currencyCode)
+    const currency = this.state.availableRates.filter(r => r.code === currencyCode)[0]
+    this.setState({ ...this.state, currency })
     return fetch(`${HTTP_CORE_ENDPOINT}/bitcoins/rates/${currencyCode}/history/`)
       .then(response => response.json())
       .then(history => this.setState({ ...this.state, history }))
@@ -39,6 +46,7 @@ class BitcoinRateContainer extends Component {
         history={this.state.history}
         onChangeRate={this.changeRate}
         stats={this.state.stats}
+        currency={this.state.currency}
       />
     )
   }

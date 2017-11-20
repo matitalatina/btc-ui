@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import HistoryChart from '../../atoms/HistoryChart'
 
 const Wrapper = styled.div``
-const BitcoinRate = ({ availableRates, history, stats, onChangeRate }) => {
+const BitcoinRate = ({ availableRates, history, stats, onChangeRate, currency }) => {
   const options = availableRates.map(r => ({ label: r.name, value: r.code }))
   const historyRender = history.map((h, i) => (
     <li key={i}>{h.rate} - {new Date(h.stamp).toISOString()}</li>
@@ -18,7 +18,7 @@ const BitcoinRate = ({ availableRates, history, stats, onChangeRate }) => {
         options={options}
         onChange={changeRate}
       />
-      <HistoryChart history={history} />
+      <HistoryChart history={history} currency={currency} />
       {statistics}
       {historyRender}
     </Wrapper>
@@ -28,8 +28,9 @@ const BitcoinRate = ({ availableRates, history, stats, onChangeRate }) => {
 BitcoinRate.propTypes = {
   availableRates: PropTypes.arrayOf(PropTypes.object),
   history: PropTypes.arrayOf(PropTypes.object),
+  currency: PropTypes.object.isRequired,
   stats: PropTypes.object,
-  onChangeRate: PropTypes.func,
+  onChangeRate: PropTypes.func.isRequired,
 }
 
 export default BitcoinRate
