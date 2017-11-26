@@ -8,7 +8,11 @@ class BitcoinRateContainer extends Component {
     super(props)
     this.changeRate = this.changeRate.bind(this)
     this.onUpdateRateStats = this.onUpdateRateStats.bind(this)
+    this.changeHistoryVisibility = this.changeHistoryVisibility.bind(this)
     this.state = {
+      options: {
+        historyVisibility: false,
+      },
       availableRates: [],
       history: [],
       stats: {},
@@ -30,10 +34,25 @@ class BitcoinRateContainer extends Component {
     this.setState({ ...this.state, history: [...this.state.history, rateStats.rate], stats: rateStats.stats })
   }
 
+  changeHistoryVisibility(historyVisibility) {
+    this.setState({ ...this.state, options: { ...this.state.options, historyVisibility } })
+    if (historyVisibility) {
+      return this.fetchHistory(this.state.currency.code)
+    }
+    return Promise.resolve(null)
+  }
+
   changeRate(currencyCode) {
     this.listener.listen(currencyCode)
     const currency = this.state.availableRates.filter(r => r.code === currencyCode)[0]
     this.setState({ ...this.state, currency })
+    if (this.state.options.historyVisibility) {
+      return this.fetchHistory(currencyCode)
+    }
+    return Promise.resolve(null)
+  }
+
+  fetchHistory(currencyCode) {
     return fetch(`${HTTP_CORE_ENDPOINT}/bitcoins/rates/${currencyCode}/history/`)
       .then(response => response.json())
       .then(history => this.setState({ ...this.state, history }))
@@ -47,6 +66,8 @@ class BitcoinRateContainer extends Component {
         onChangeRate={this.changeRate}
         stats={this.state.stats}
         currency={this.state.currency}
+        historyVisibility={this.state.options.historyVisibility}
+        onHistoryVisibilityChange={this.changeHistoryVisibility}
       />
     )
   }
