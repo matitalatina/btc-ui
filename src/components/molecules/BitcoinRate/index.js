@@ -41,7 +41,7 @@ const BitcoinRate = ({ availableRates, history, stats, onChangeRate, currency, h
           style={{ minWidth: '200px' }}
         />
         <Checkbox
-          label="Show history"
+          label="History"
           isChecked={historyVisibility}
           onCheckChange={onHistoryVisibilityChange}
         />

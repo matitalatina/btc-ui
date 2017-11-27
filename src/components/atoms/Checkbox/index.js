@@ -8,6 +8,7 @@ const Label = styled.label`
   justify-content: center;
   align-items: center;
   text-align: center;
+  text-transform: uppercase;
 `
 const WrapperLabel = styled.span`
   margin-bottom: 0.2rem;

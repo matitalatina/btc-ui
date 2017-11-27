@@ -16,7 +16,10 @@ const Wrapper = styled.div`
 
 const Header = styled.header``
 
-const ContentCentered = Content.extend`
+const FilledContent = Content.extend`
+  flex: 1;
+`
+const ContentCentered = FilledContent.extend`
   flex: 1;
   display: flex;
   align-items: center;
@@ -38,7 +41,7 @@ const PageTemplate = ({
   return (
     <Wrapper {...props}>
       {header && <Header>{header}</Header>}
-      {contentCentered ? <ContentCentered>{children}</ContentCentered> : <Content>{children}</Content>}
+      {contentCentered ? <ContentCentered>{children}</ContentCentered> : <FilledContent>{children}</FilledContent>}
       {footer && <Footer>{footer}</Footer>}
     </Wrapper>
   )
