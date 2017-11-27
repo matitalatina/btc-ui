@@ -2,7 +2,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { size, palette } from 'styled-theme'
+import { palette } from 'styled-theme'
+import Content from '../../atoms/Content'
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,19 +14,7 @@ const Wrapper = styled.div`
   color: ${palette('foreground', 0)};
 `
 
-const Header = styled.header`
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 999;
-`
-
-const Content = styled.section`
-  width: 100%;
-  box-sizing: border-box;
-  margin: 2rem auto;
-  max-width: ${size('maxWidth')};
-`
+const Header = styled.header``
 
 const ContentCentered = Content.extend`
   flex: 1;

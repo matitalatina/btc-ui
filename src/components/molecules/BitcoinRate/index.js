@@ -4,37 +4,52 @@ import Select from 'react-select'
 import styled from 'styled-components'
 import HistoryChart from '../../atoms/HistoryChart'
 import Checkbox from '../../atoms/Checkbox'
+import Stripe from '../../atoms/Stripe'
+import LabelValue from '../../atoms/LabelValue'
 
 const Wrapper = styled.div``
+const WrapperSpaced = styled.div`
+  margin: 1rem 0;
+`
 const BitcoinRate = ({ availableRates, history, stats, onChangeRate, currency, historyVisibility, onHistoryVisibilityChange }) => {
   const options = availableRates.map(r => ({ label: r.name, value: r.code }))
   const changeRate = val => onChangeRate(val.value)
-  const statistics = stats && stats.avg && (<span>{stats.avg} - {stats.variance} - {stats.min} - {stats.max}</span>)
   let historySection = null
   if (historyVisibility) {
     const historyRender = history.map((h, i) => (
       <li key={i}>{h.rate} - {new Date(h.stamp).toISOString()}</li>
     ))
     historySection = (
-      <div>
+      <WrapperSpaced>
         <HistoryChart history={history} currency={currency} />
         {historyRender}
-      </div>
+      </WrapperSpaced>
     )
+  }
+  const selectedCurrency = {
+    value: currency.code,
+    label: currency.name,
   }
 
   return (
     <Wrapper>
-      <Select
-        options={options}
-        onChange={changeRate}
-      />
-      <Checkbox
-        label="Show history"
-        isChecked={historyVisibility}
-        onCheckChange={onHistoryVisibilityChange}
-      />
-      {statistics}
+      <Stripe inverse>
+        <Select
+          options={options}
+          onChange={changeRate}
+          value={selectedCurrency}
+          style={{ minWidth: '200px' }}
+        />
+        <Checkbox
+          label="Show history"
+          isChecked={historyVisibility}
+          onCheckChange={onHistoryVisibilityChange}
+        />
+        <LabelValue label="Min" value={stats.min} />
+        <LabelValue label="Max" value={stats.max} />
+        <LabelValue label="Avg" value={stats.avg} />
+        <LabelValue label="Variance" value={stats.variance} />
+      </Stripe>
       {historySection}
     </Wrapper>
   )
